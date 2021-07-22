@@ -112,18 +112,20 @@ function buildCharts(sample) {
 
 // DELIVERABLE 2
     // 1. Create the trace for the bubble chart.
-    var bubbleData = {
-   
-      x: otu_ids,  
-      y: sample_values,
-      text: otu_labels,
-      mode: 'markers',
-      marker: {
-        color: otu_ids,
-        size: sample_values
+    var bubbleData = [
+      {
+        x: otu_ids,
+        y: sample_values,
+        text: otu_labels,
+        mode: 'markers',
+        marker: {
+          size: sample_values,
+          color: otu_ids,
+        }
 
       }
-    };
+   
+    ];
 
     // 2. Create the layout for the bubble chart.
     var bubbleLayout = {
@@ -135,7 +137,7 @@ function buildCharts(sample) {
     };
 
     // 3. Use Plotly to plot the data with the layout.
-    Plotly.newPlot('bubble', bubbleData, bubbleLayout); 
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout)
 
     // DELIVERABLE 3
     // 4. Create the trace for the gauge chart.
@@ -167,4 +169,3 @@ function buildCharts(sample) {
   Plotly.newPlot("gauge", gaugeData, gaugeLayout);
 });
 }
-
