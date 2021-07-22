@@ -26,7 +26,7 @@ function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
   buildCharts(newSample);
-  buildBubbleChart(newSample)
+  
   buildGaugeChart(newSample)
   
 }
@@ -109,7 +109,62 @@ function buildCharts(sample) {
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot('bar', barData, barLayout)
     
-  });
-}
 
+// DELIVERABLE 2
+    // 1. Create the trace for the bubble chart.
+    var bubbleData = {
+   
+      x: otu_ids,  
+      y: sample_values,
+      text: otu_labels,
+      mode: 'markers',
+      marker: {
+        color: otu_ids,
+        size: sample_values
+
+      }
+    };
+
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+      title: "Bacteria Cultures per Sample",
+      margin: {t:25},
+      xaxis: {title: "OTU ID's"},
+      hovermode: "closest",
+      type: "bubble"
+    };
+
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout); 
+
+    // DELIVERABLE 3
+    // 4. Create the trace for the gauge chart.
+    var gaugeData = [{
+      domain: {x: [0,1], y: [0,1]},
+      value: washFreq,
+      title: {text: "Belly Button Washing Frequency"},
+      type: "indicator",
+      mode: "gauge+number",
+      gauge: {axis: {range: [null, 10]},
+      bar: {color: "black"},
+        steps: [
+          {range: [0,2], color: "red"},
+          {range: [2,4], color: "orange"},
+          {range: [4,6], color: "yellow"},
+          {range: [6,8], color: "darkgreen"},
+          {range: [8,10], color: "green"},
+        ]}
+    }];
+    
+  // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+     width: 700,
+     height: 600,
+     margin: {t:20, b:40, 1:100, r:100}
+    };
+
+  // 6. Use Plotly to plot the gauge data and layout.
+  Plotly.newPlot("gauge", gaugeData, gaugeLayout);
+});
+}
 
