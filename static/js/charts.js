@@ -26,6 +26,8 @@ function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
   buildCharts(newSample);
+  buildBubbleChart(newSample)
+  buildGaugeChart(newSample)
   
 }
 
@@ -54,24 +56,30 @@ function buildMetadata(sample) {
 
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
+  
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
+    
     // 3. Create a variable that holds the samples array. 
     var resultArray = data
     .samples
+
+    // 4. Create a variable that filters the samples for the object with the desired sample number.
+
     .filter(sampleObj => {
       return sampleObj.id == sample
     });
-    // 4. Create a variable that filters the samples for the object with the desired sample number.
-    var result = resultArray[0];
+
     //  5. Create a variable that holds the first sample in the array.
+    
+    var result = resultArray[0];   
+
+    // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     
     var top_ten_otu_ids = result.otu_ids.slice(0, 10).map(numericIds => {
       return 'OTU ' + numericIds;
     }).reverse();
 
-    // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-   
     var top_ten_sample_values = result.sample_values.slice(0, 10).reverse();
     var top_ten_otu_labels = result.otu_labels.slice(0, 10).reverse();
 
@@ -95,9 +103,7 @@ function buildCharts(sample) {
     ];
     // 9. Create the layout for the bar chart. 
     var barLayout = {
-            title: "<b>Top Ten Bacteria Species</b>",
-            xaxis: { title: "Species" },
-            yaxis: { title: "Sample Values"}
+      title: "Top 10 Bacteria Species",
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot('bar', barData, barLayout)
