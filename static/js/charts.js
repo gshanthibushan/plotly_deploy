@@ -116,8 +116,8 @@ function buildCharts(sample) {
         text: top_ten_otu_labels,
         mode: 'markers',
         marker: {
-          size: sample_values,
-          color: otu_ids,
+          size: top_ten_sample_values,
+          color: top_ten_otu_ids
         }
 
       }
