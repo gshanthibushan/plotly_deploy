@@ -27,8 +27,6 @@ function optionChanged(newSample) {
   buildMetadata(newSample);
   buildCharts(newSample);
   
-  buildGaugeChart(newSample)
-  
 }
 
 // Demographics Panel 
