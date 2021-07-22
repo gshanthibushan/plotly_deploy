@@ -71,8 +71,6 @@ function buildCharts(sample) {
     
     var result = resultArray[0];   
 
-    // 3. Create a variable that holds the washing frequency.
-    var wash = metaArray[0].wfreq;
    
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     
@@ -123,7 +121,7 @@ function buildCharts(sample) {
         marker: {
           size: top_ten_sample_values,
           color: top_ten_otu_ids,
-          colorscale: 'viridis'
+          colorscale: 'Cividis'
         }
 
       }
@@ -145,12 +143,22 @@ function buildCharts(sample) {
 
     // DELIVERABLE 3
 
-    console.log("wash freq" + resultMD.washFreq);
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout, {responsive:true})
 
+    // 1. Gauge - Create a variable that filters the metadata array for the object with the desired sample number.
+    var sampleArray = data.metadata.filter(sampleObj => sampleObj.id == sample);
+
+    // 2. Create a variable that holds the first sample in the metadata array.
+    sample = sampleArray[0];
+
+    // 3. Create a variable that holds the washing frequency.
+    var wfreq = parseFloat(sample.wfreq)
+  
     // 4. Create the trace for the gauge chart.
     var gaugeData = [{
       domain: {x: [0,1], y: [0,1]},
-      value: washFreq,
+      value: wfreq,
       title: {text: "Belly Button Washing Frequency"},
       type: "indicator",
       mode: "gauge+number",
