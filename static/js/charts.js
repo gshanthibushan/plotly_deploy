@@ -102,6 +102,8 @@ function buildCharts(sample) {
     // 9. Create the layout for the bar chart. 
     var barLayout = {
       title: "Top 10 Bacteria Species",
+      xaxis: { title: "Species" },
+      yaxis: { title: "Sample Values"}
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot('bar', barData, barLayout)
@@ -117,7 +119,8 @@ function buildCharts(sample) {
         mode: 'markers',
         marker: {
           size: top_ten_sample_values,
-          color: top_ten_otu_ids
+          color: top_ten_otu_ids,
+          colorscale: 'viridis'
         }
 
       }
@@ -127,8 +130,9 @@ function buildCharts(sample) {
     // 2. Create the layout for the bubble chart.
     var bubbleLayout = {
       title: "Bacteria Cultures per Sample",
+      xaxis: { title: "OTU ID" },
+      yaxis: { title: "Frequency"},
       margin: {t:25},
-      xaxis: {title: "OTU ID's"},
       hovermode: "closest",
       type: "bubble"
     };
@@ -137,11 +141,18 @@ function buildCharts(sample) {
     Plotly.newPlot('bubble', bubbleData, bubbleLayout)
 
     // DELIVERABLE 3
+
+    var metadata = data.metadata;
+    var resultArrayMD = metadata.filter(sampleObj=>sampleObj.id==sample);
+    var resultMD = resultArrayMD[0];
+   
+    console.log("wash freq" + resultMD.washFreq);
+
     // 4. Create the trace for the gauge chart.
     var gaugeData = [{
       domain: {x: [0,1], y: [0,1]},
-      value: washFreq,
-      title: {text: "Belly Button Washing Frequency"},
+      value: resultMD.washFreq,
+      title: {text: "Belly Button Washing Frequency (Times Per Week)"},
       type: "indicator",
       mode: "gauge+number",
       gauge: {axis: {range: [null, 10]},
@@ -157,7 +168,7 @@ function buildCharts(sample) {
     
   // 5. Create the layout for the gauge chart.
     var gaugeLayout = { 
-     width: 700,
+     width: 400,
      height: 600,
      margin: {t:20, b:40, 1:100, r:100}
     };
